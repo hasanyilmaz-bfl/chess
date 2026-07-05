@@ -96,6 +96,59 @@
     box-shadow: 0 20px 50px -20px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.03);
   }
 
+  .players-strip{
+    display:grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items:center;
+    gap:10px;
+    margin-bottom:12px;
+  }
+  .p-side{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid #3a352b;
+    border-radius:5px;
+    padding:8px 12px;
+    transition:border-color 0.2s ease, background 0.2s ease;
+  }
+  .p-side.black-side{ flex-direction:row-reverse; text-align:right; }
+  .p-side.active{ border-color:var(--gold); background:rgba(201,162,39,0.08); }
+  .p-side .p-glyph{ font-size:1.5rem; flex-shrink:0; }
+  .p-side .p-info{ display:flex; flex-direction:column; min-width:0; flex:1; }
+  .p-side .p-name{
+    font-family:var(--sans);
+    font-size:0.82rem;
+    font-weight:600;
+    color:var(--off-white);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .p-side .p-clock{
+    font-family:var(--mono);
+    font-size:1.05rem;
+    letter-spacing:1px;
+    color:var(--gold-soft);
+  }
+  .p-side.low-time .p-clock{ color:var(--danger); }
+  .p-side .p-clock.no-clock{ color:#6b6155; font-size:0.75rem; text-transform:uppercase; letter-spacing:2px; }
+  .edit-names-btn{
+    font-family:var(--mono);
+    font-size:0.6rem;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    background:transparent;
+    color:var(--walnut);
+    border:1px solid #3a352b;
+    padding:6px 10px;
+    border-radius:3px;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .edit-names-btn:hover{ color:var(--gold); border-color:var(--gold); }
+
   .status-bar{
     display:flex;
     align-items:center;
@@ -317,6 +370,181 @@
   }
   .modal .choices button:hover{ transform:translateY(-3px); background:var(--gold); }
 
+  /* Entrance / registry */
+  .entrance-overlay{
+    position:fixed; inset:0;
+    background:
+      radial-gradient(ellipse at top left, #262219 0%, transparent 55%),
+      radial-gradient(ellipse at bottom right, #201c15 0%, transparent 55%),
+      rgba(10,9,7,0.94);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    padding:20px;
+    overflow-y:auto;
+  }
+  .entrance-overlay.hidden{ display:none; }
+  .entrance-card{
+    background:linear-gradient(180deg, #f4efe4, #ecE4d2);
+    color:#2b2419;
+    border-radius:6px;
+    width:100%;
+    max-width:480px;
+    box-shadow:0 30px 70px rgba(0,0,0,0.55);
+    overflow:hidden;
+    margin:auto;
+  }
+  .entrance-head{
+    background:var(--ink-2);
+    padding:22px 30px 18px;
+    text-align:center;
+    border-bottom:3px solid var(--gold);
+  }
+  .entrance-head .kicker{
+    font-family:var(--mono);
+    text-transform:uppercase;
+    letter-spacing:3px;
+    font-size:0.65rem;
+    color:var(--walnut);
+    margin-bottom:6px;
+  }
+  .entrance-head h2{
+    font-family:var(--serif);
+    color:var(--off-white);
+    margin:0;
+    font-size:1.5rem;
+    font-weight:600;
+  }
+  .entrance-head h2 .accent{ color:var(--gold); font-style:italic; }
+  .entrance-body{
+    padding:24px 30px 6px;
+  }
+  .entrance-section-label{
+    font-family:var(--mono);
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:0.62rem;
+    color:#8a7a5f;
+    margin:14px 0 10px;
+  }
+  .entrance-field{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px 0 12px;
+    border-bottom:1px dashed rgba(0,0,0,0.18);
+  }
+  .entrance-field .piece-glyph{
+    font-size:1.6rem;
+    width:30px;
+    text-align:center;
+    flex-shrink:0;
+  }
+  .entrance-field .field-meta{ flex:1; }
+  .entrance-field label{
+    display:block;
+    font-family:var(--mono);
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    font-size:0.6rem;
+    color:#8a7a5f;
+    margin-bottom:4px;
+  }
+  .entrance-field input{
+    width:100%;
+    border:none;
+    border-bottom:2px solid var(--walnut);
+    background:transparent;
+    font-family:var(--serif);
+    font-size:1.1rem;
+    color:#2b2419;
+    padding:4px 2px 6px;
+    outline:none;
+  }
+  .entrance-field input:focus{ border-bottom-color:var(--gold); }
+  .entrance-field input::placeholder{ color:#b3a488; font-style:italic; }
+
+  .time-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:8px;
+    margin-bottom:6px;
+  }
+  .time-chip{
+    font-family:var(--mono);
+    font-size:0.72rem;
+    text-align:center;
+    padding:10px 6px;
+    border:1.5px solid var(--walnut);
+    border-radius:4px;
+    cursor:pointer;
+    background:rgba(124,106,88,0.08);
+    transition:all 0.12s ease;
+    line-height:1.3;
+  }
+  .time-chip .tc-label{ display:block; font-weight:700; font-size:0.8rem; }
+  .time-chip .tc-sub{ display:block; text-transform:uppercase; letter-spacing:1px; font-size:0.55rem; color:#7a6c53; }
+  .time-chip:hover{ border-color:var(--gold); }
+  .time-chip.selected{ background:var(--gold); border-color:var(--gold); color:var(--ink); }
+  .time-chip.selected .tc-sub{ color:#3b2f14; }
+
+  .custom-time-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:8px;
+  }
+  .custom-time-row.hidden{ display:none; }
+  .custom-time-row label{
+    font-family:var(--mono);
+    font-size:0.65rem;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:#7a6c53;
+    white-space:nowrap;
+  }
+  .custom-time-row input{
+    width:70px;
+    border:none;
+    border-bottom:2px solid var(--walnut);
+    background:transparent;
+    font-family:var(--mono);
+    font-size:1rem;
+    color:#2b2419;
+    padding:4px 2px;
+    outline:none;
+  }
+  .custom-time-row input:focus{ border-bottom-color:var(--gold); }
+
+  .entrance-footer{
+    padding:16px 30px 26px;
+  }
+  .entrance-start{
+    width:100%;
+    font-family:var(--mono);
+    font-size:0.78rem;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    background:var(--gold);
+    color:var(--ink);
+    border:none;
+    padding:13px 16px;
+    border-radius:3px;
+    cursor:pointer;
+    transition:all 0.15s ease;
+  }
+  .entrance-start:hover{ background:var(--gold-soft); }
+  .entrance-note{
+    text-align:center;
+    font-family:var(--mono);
+    font-size:0.6rem;
+    letter-spacing:1px;
+    color:#8a7a5f;
+    text-transform:uppercase;
+    margin:10px 0 0;
+  }
+
   footer.note{
     text-align:center;
     margin-top:26px;
@@ -339,6 +567,24 @@
 
   <div class="layout">
     <div class="board-panel">
+      <div class="players-strip">
+        <div class="p-side white-side" id="whiteSide">
+          <span class="p-glyph piece white">♔</span>
+          <div class="p-info">
+            <span class="p-name" id="whiteNameLabel">White</span>
+            <span class="p-clock" id="whiteClockLabel">—:—</span>
+          </div>
+        </div>
+        <button class="edit-names-btn" id="editNamesBtn">Edit</button>
+        <div class="p-side black-side" id="blackSide">
+          <span class="p-glyph piece black">♚</span>
+          <div class="p-info">
+            <span class="p-name" id="blackNameLabel">Black</span>
+            <span class="p-clock" id="blackClockLabel">—:—</span>
+          </div>
+        </div>
+      </div>
+
       <div class="status-bar">
         <div><span class="turn-dot" id="turnDot"></span><span id="turnLabel">White to move</span></div>
         <div class="status-msg" id="statusMsg"></div>
@@ -368,7 +614,7 @@
     </div>
   </div>
 
-  <footer class="note">Click a piece, then click a highlighted square · Local pass-and-play, no clock</footer>
+  <footer class="note">Click a piece, then click a highlighted square · Local pass-and-play</footer>
 </div>
 
 <div class="modal-overlay" id="promoOverlay">
@@ -378,12 +624,57 @@
   </div>
 </div>
 
+<div class="entrance-overlay" id="entranceOverlay">
+  <div class="entrance-card">
+    <div class="entrance-head">
+      <div class="kicker">Before The First Move</div>
+      <h2>Sign the <span class="accent">Register</span></h2>
+    </div>
+    <div class="entrance-body">
+      <div class="entrance-field">
+        <span class="piece-glyph piece white">♔</span>
+        <div class="field-meta">
+          <label for="whiteNameInput">Playing White</label>
+          <input type="text" id="whiteNameInput" placeholder="White" maxlength="20" autocomplete="off">
+        </div>
+      </div>
+      <div class="entrance-field">
+        <span class="piece-glyph piece black">♚</span>
+        <div class="field-meta">
+          <label for="blackNameInput">Playing Black</label>
+          <input type="text" id="blackNameInput" placeholder="Black" maxlength="20" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="entrance-section-label">Time Control</div>
+      <div class="time-grid" id="timeGrid">
+        <div class="time-chip" data-minutes="1"><span class="tc-label">1 min</span><span class="tc-sub">Bullet</span></div>
+        <div class="time-chip" data-minutes="3"><span class="tc-label">3 min</span><span class="tc-sub">Blitz</span></div>
+        <div class="time-chip selected" data-minutes="5"><span class="tc-label">5 min</span><span class="tc-sub">Blitz</span></div>
+        <div class="time-chip" data-minutes="10"><span class="tc-label">10 min</span><span class="tc-sub">Rapid</span></div>
+        <div class="time-chip" data-minutes="30"><span class="tc-label">30 min</span><span class="tc-sub">Classical</span></div>
+        <div class="time-chip" data-minutes="0"><span class="tc-label">∞</span><span class="tc-sub">No Clock</span></div>
+      </div>
+      <div class="custom-time-row hidden" id="customTimeRow">
+        <label for="customMinutes">Custom minutes per side</label>
+        <input type="number" id="customMinutes" min="1" max="180" value="15">
+      </div>
+      <div style="text-align:center; margin-top:8px;">
+        <span class="tc-sub" id="customToggle" style="cursor:pointer; font-family:var(--mono); font-size:0.62rem; letter-spacing:1px; color:#7a6c53; text-decoration:underline; text-transform:uppercase;">Use custom time instead</span>
+      </div>
+    </div>
+    <div class="entrance-footer">
+      <button class="entrance-start" id="startGameBtn">Begin Game</button>
+      <p class="entrance-note">White moves first · Clock starts when the game begins</p>
+    </div>
+  </div>
+</div>
+
 <script>
 (function(){
   const PIECES = { P:'♙', N:'♘', B:'♗', R:'♖', Q:'♕', K:'♔' };
   const files = ['a','b','c','d','e','f','g','h'];
 
-  // board[row][col], row 0 = rank8 (top, black home), row 7 = rank1 (white home)
   function initialBoard(){
     const b = Array.from({length:8}, ()=>Array(8).fill(null));
     const backRow = ['R','N','B','Q','K','B','N','R'];
@@ -396,19 +687,32 @@
     return b;
   }
 
-  let state = {
-    board: initialBoard(),
-    turn: 'w',
-    selected: null, // {r,c}
-    legalTargets: [], // list of {r,c,flag}
-    castling: {wK:true, wQ:true, bK:true, bQ:true},
-    enPassant: null, // {r,c} target square
-    lastMove: null, // {from:{r,c}, to:{r,c}}
-    history: [], // {white: 'e4', black: 'e5'} rows for ledger
-    captured: {w:[], b:[]}, // captured[w] = pieces white has captured (black pieces)
-    gameOver: false,
-    pendingPromotion: null
-  };
+  function freshState(players, minutesPerSide){
+    const seconds = minutesPerSide > 0 ? minutesPerSide * 60 : null;
+    return {
+      board: initialBoard(),
+      turn: 'w',
+      selected: null,
+      legalTargets: [],
+      castling: {wK:true, wQ:true, bK:true, bQ:true},
+      enPassant: null,
+      lastMove: null,
+      history: [],
+      captured: {w:[], b:[]},
+      gameOver: false,
+      pendingPromotion: null,
+      players: players,
+      clock: {
+        enabled: seconds !== null,
+        minutesPerSide: minutesPerSide,
+        w: seconds,
+        b: seconds,
+        intervalId: null
+      }
+    };
+  }
+
+  let state = freshState({w:'White', b:'Black'}, 5);
 
   const boardEl = document.getElementById('board');
   const turnLabel = document.getElementById('turnLabel');
@@ -422,6 +726,25 @@
   const capturedBlackEl = document.getElementById('capturedBlack');
   const promoOverlay = document.getElementById('promoOverlay');
   const promoChoices = document.getElementById('promoChoices');
+
+  const entranceOverlay = document.getElementById('entranceOverlay');
+  const whiteNameInput = document.getElementById('whiteNameInput');
+  const blackNameInput = document.getElementById('blackNameInput');
+  const startGameBtn = document.getElementById('startGameBtn');
+  const editNamesBtn = document.getElementById('editNamesBtn');
+  const whiteNameLabel = document.getElementById('whiteNameLabel');
+  const blackNameLabel = document.getElementById('blackNameLabel');
+  const whiteClockLabel = document.getElementById('whiteClockLabel');
+  const blackClockLabel = document.getElementById('blackClockLabel');
+  const whiteSide = document.getElementById('whiteSide');
+  const blackSide = document.getElementById('blackSide');
+  const timeGrid = document.getElementById('timeGrid');
+  const customTimeRow = document.getElementById('customTimeRow');
+  const customMinutesInput = document.getElementById('customMinutes');
+  const customToggle = document.getElementById('customToggle');
+
+  let selectedMinutes = 5;
+  let usingCustom = false;
 
   function cloneBoard(b){
     return b.map(row => row.map(cell => cell ? {...cell} : null));
@@ -437,12 +760,11 @@
     return null;
   }
 
-  // Generate pseudo-legal moves for a piece at r,c (does not check own-king safety)
   function pseudoMoves(board, r, c, castling, enPassant){
     const p = board[r][c];
     if(!p) return [];
     const moves = [];
-    const dir = p.color === 'w' ? -1 : 1; // white moves up (toward row 0)
+    const dir = p.color === 'w' ? -1 : 1;
     const startRow = p.color === 'w' ? 6 : 1;
     const opp = p.color === 'w' ? 'b' : 'w';
 
@@ -451,18 +773,16 @@
       const target = board[rr][cc];
       if(target && target.color === p.color) return false;
       moves.push({r:rr, c:cc, flag: flag || (target ? 'capture' : 'move')});
-      return !target; // true if empty (can continue sliding)
+      return !target;
     }
 
     if(p.type === 'P'){
-      // forward
       if(inBounds(r+dir, c) && !board[r+dir][c]){
         moves.push({r:r+dir, c, flag:'move'});
         if(r === startRow && !board[r+2*dir][c]){
           moves.push({r:r+2*dir, c, flag:'double'});
         }
       }
-      // captures
       for(const dc of [-1,1]){
         const rr = r+dir, cc = c+dc;
         if(inBounds(rr,cc)){
@@ -495,7 +815,6 @@
         if(dr===0 && dc===0) continue;
         pushIfOk(r+dr, c+dc);
       }
-      // castling
       const homeRow = p.color === 'w' ? 7 : 0;
       if(r === homeRow && c === 4){
         const kSideKey = p.color === 'w' ? 'wK' : 'bK';
@@ -562,7 +881,6 @@
       newBoard[to.r][to.c] = {type: promotionType, color: piece.color};
     }
 
-    // update castling rights
     const newCastling = {...castling};
     if(piece.type === 'K'){
       if(piece.color === 'w'){ newCastling.wK = false; newCastling.wQ = false; }
@@ -574,7 +892,6 @@
       if(from.r === 0 && from.c === 0) newCastling.bQ = false;
       if(from.r === 0 && from.c === 7) newCastling.bK = false;
     }
-    // if rook captured on its home square
     if(to.r === 7 && to.c === 0) newCastling.wQ = false;
     if(to.r === 7 && to.c === 7) newCastling.wK = false;
     if(to.r === 0 && to.c === 0) newCastling.bQ = false;
@@ -623,10 +940,7 @@
   }
 
   function squareName(r,c){ return files[c] + (8-r); }
-
-  function pieceLetter(type){
-    return type === 'P' ? '' : type;
-  }
+  function pieceLetter(type){ return type === 'P' ? '' : type; }
 
   function performMove(from, to, flag, promotionType){
     const piece = state.board[from.r][from.c];
@@ -652,7 +966,6 @@
     if(inCheck && !hasMoves) suffix = '#';
     else if(inCheck) suffix = '+';
 
-    // build SAN-ish notation
     let san;
     if(flag === 'castle-k') san = 'O-O';
     else if(flag === 'castle-q') san = 'O-O-O';
@@ -671,15 +984,11 @@
     recordMove(piece.color, san);
 
     if(inCheck && !hasMoves){
-      state.gameOver = true;
-      statusMsg.textContent = (piece.color === 'w' ? 'White' : 'Black') + ' wins by checkmate';
-      ledgerStatus.textContent = 'Checkmate';
+      endGame(state.players[piece.color] + ' wins by checkmate', 'Checkmate');
     } else if(!hasMoves){
-      state.gameOver = true;
-      statusMsg.textContent = 'Draw by stalemate';
-      ledgerStatus.textContent = 'Stalemate';
+      endGame('Draw by stalemate', 'Stalemate');
     } else if(inCheck){
-      statusMsg.textContent = (oppColor === 'w' ? 'White' : 'Black') + ' is in check';
+      statusMsg.textContent = state.players[oppColor] + ' is in check';
       ledgerCheck.textContent = 'Check!';
     } else {
       statusMsg.textContent = '';
@@ -719,7 +1028,6 @@
         performMove(state.selected, {r,c}, target.flag, null);
         return;
       }
-      // clicking another own piece re-selects
       if(piece && piece.color === state.turn){
         state.selected = {r,c};
         state.legalTargets = legalMovesForSquare(r,c);
@@ -757,6 +1065,65 @@
     promoOverlay.classList.add('active');
   }
 
+  /* ---------- Clock ---------- */
+  function formatTime(seconds){
+    if(seconds === null || seconds === undefined) return '—:—';
+    const s = Math.max(0, Math.ceil(seconds));
+    const m = Math.floor(s/60);
+    const sec = s % 60;
+    return m + ':' + String(sec).padStart(2,'0');
+  }
+
+  function stopClockInterval(){
+    if(state.clock.intervalId){
+      clearInterval(state.clock.intervalId);
+      state.clock.intervalId = null;
+    }
+  }
+
+  function startClockInterval(){
+    stopClockInterval();
+    if(!state.clock.enabled || state.gameOver) return;
+    state.clock.intervalId = setInterval(() => {
+      if(state.gameOver){ stopClockInterval(); return; }
+      state.clock[state.turn] -= 1;
+      if(state.clock[state.turn] <= 0){
+        state.clock[state.turn] = 0;
+        const winner = state.turn === 'w' ? 'b' : 'w';
+        endGame(state.players[winner] + ' wins on time', 'Time');
+        render();
+        return;
+      }
+      updateClockDisplay();
+    }, 1000);
+  }
+
+  function updateClockDisplay(){
+    if(state.clock.enabled){
+      whiteClockLabel.textContent = formatTime(state.clock.w);
+      blackClockLabel.textContent = formatTime(state.clock.b);
+      whiteClockLabel.classList.remove('no-clock');
+      blackClockLabel.classList.remove('no-clock');
+      whiteSide.classList.toggle('low-time', state.clock.w <= 20);
+      blackSide.classList.toggle('low-time', state.clock.b <= 20);
+    } else {
+      whiteClockLabel.textContent = 'No Clock';
+      blackClockLabel.textContent = 'No Clock';
+      whiteClockLabel.classList.add('no-clock');
+      blackClockLabel.classList.add('no-clock');
+      whiteSide.classList.remove('low-time');
+      blackSide.classList.remove('low-time');
+    }
+  }
+
+  function endGame(message, ledgerLabel){
+    state.gameOver = true;
+    stopClockInterval();
+    statusMsg.textContent = message;
+    ledgerStatus.textContent = ledgerLabel;
+  }
+
+  /* ---------- Render ---------- */
   function render(){
     boardEl.innerHTML = '';
     const kingInCheckPos = (() => {
@@ -809,10 +1176,14 @@
       }
     }
 
-    turnLabel.textContent = (state.turn === 'w' ? 'White' : 'Black') + ' to move';
+    turnLabel.textContent = state.players[state.turn] + ' to move';
     turnDot.className = 'turn-dot' + (state.turn === 'b' ? ' black' : '');
+    whiteNameLabel.textContent = state.players.w;
+    blackNameLabel.textContent = state.players.b;
+    whiteSide.classList.toggle('active', state.turn === 'w' && !state.gameOver);
+    blackSide.classList.toggle('active', state.turn === 'b' && !state.gameOver);
+    updateClockDisplay();
 
-    // ledger
     if(state.history.length === 0){
       ledgerBody.innerHTML = '<div class="ledger-empty">No moves recorded yet. White opens the game.</div>';
     } else {
@@ -827,7 +1198,6 @@
     }
     moveCountEl.textContent = (state.history.length) + (state.history.length===1 ? ' move' : ' moves');
 
-    // captured pieces
     capturedWhiteEl.innerHTML = state.captured.w.map(p => `<span class="piece black">${PIECES[p.type]}</span>`).join('');
     capturedBlackEl.innerHTML = state.captured.b.map(p => `<span class="piece white">${PIECES[p.type]}</span>`).join('');
 
@@ -836,24 +1206,69 @@
     }
   }
 
-  document.getElementById('resetBtn').addEventListener('click', () => {
-    state = {
-      board: initialBoard(),
-      turn: 'w',
-      selected: null,
-      legalTargets: [],
-      castling: {wK:true, wQ:true, bK:true, bQ:true},
-      enPassant: null,
-      lastMove: null,
-      history: [],
-      captured: {w:[], b:[]},
-      gameOver: false,
-      pendingPromotion: null
-    };
-    statusMsg.textContent = '';
-    ledgerCheck.textContent = '';
-    ledgerStatus.textContent = 'In progress';
+  /* ---------- Entrance flow ---------- */
+  timeGrid.querySelectorAll('.time-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      timeGrid.querySelectorAll('.time-chip').forEach(x => x.classList.remove('selected'));
+      chip.classList.add('selected');
+      selectedMinutes = parseInt(chip.dataset.minutes, 10);
+      usingCustom = false;
+      customTimeRow.classList.add('hidden');
+      customToggle.textContent = 'Use custom time instead';
+    });
+  });
+
+  customToggle.addEventListener('click', () => {
+    usingCustom = !usingCustom;
+    if(usingCustom){
+      timeGrid.querySelectorAll('.time-chip').forEach(x => x.classList.remove('selected'));
+      customTimeRow.classList.remove('hidden');
+      customToggle.textContent = 'Use a preset instead';
+    } else {
+      customTimeRow.classList.add('hidden');
+      customToggle.textContent = 'Use custom time instead';
+      const defaultChip = timeGrid.querySelector('[data-minutes="5"]');
+      defaultChip.classList.add('selected');
+      selectedMinutes = 5;
+    }
+  });
+
+  function beginGameFromEntrance(){
+    const w = whiteNameInput.value.trim();
+    const b = blackNameInput.value.trim();
+    let minutes = selectedMinutes;
+    if(usingCustom){
+      minutes = parseInt(customMinutesInput.value, 10);
+      if(!minutes || minutes < 1) minutes = 15;
+    }
+    const players = { w: w || 'White', b: b || 'Black' };
+    state = freshState(players, minutes);
+    entranceOverlay.classList.add('hidden');
     render();
+    startClockInterval();
+  }
+
+  startGameBtn.addEventListener('click', beginGameFromEntrance);
+  [whiteNameInput, blackNameInput, customMinutesInput].forEach(input => {
+    input.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter') beginGameFromEntrance();
+    });
+  });
+
+  editNamesBtn.addEventListener('click', () => {
+    stopClockInterval();
+    whiteNameInput.value = state.players.w === 'White' ? '' : state.players.w;
+    blackNameInput.value = state.players.b === 'Black' ? '' : state.players.b;
+    entranceOverlay.classList.remove('hidden');
+    whiteNameInput.focus();
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    const players = state.players;
+    const minutes = state.clock.minutesPerSide;
+    state = freshState(players, minutes);
+    render();
+    startClockInterval();
   });
 
   render();
